@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, url_for
-from serverless_wsgi import handle_request
 
 # Set template and static folders relative to this file's location
 app = Flask(__name__, template_folder="../templates", static_folder="../static")
@@ -36,10 +35,6 @@ def delete(file_id):
     global files
     files = [f for f in files if f["id"] != file_id]
     return redirect(url_for("index"))
-
-# Vercel requires an exported function named "handler"
-def handler(event, context):
-    return handle_request(app, event, context)
 
 if __name__ == "__main__":
     app.run(debug=True)
